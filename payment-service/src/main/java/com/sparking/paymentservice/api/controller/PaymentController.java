@@ -2,22 +2,25 @@ package com.sparking.paymentservice.api.controller;
 
 import com.sparking.paymentservice.api.domain.Payment;
 import com.sparking.paymentservice.api.service.PaymentService;
+import com.sparking.paymentservice.api.service.dto.OrderDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/api/payment")
+@RequestMapping("/payment")
 public class PaymentController {
     private final PaymentService service;
 
     @PostMapping
-    public Payment doPayment(@RequestBody Payment payment){
-        return service.savePayment(payment);
+    public Payment doPayment(@RequestBody OrderDto order) {
+        return service.savePayment(order);
+    }
+
+    @GetMapping("/{id}")
+    public Payment getPaymentById(@PathVariable Long id){
+        return service.getPaymentById(id);
     }
 }
